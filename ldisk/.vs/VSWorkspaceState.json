@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\ISSUE_TEMPLATE",
+    "\\.github\\workflows",
+    "\\bin",
+    "\\docs",
+    "\\flussi",
+    "\\log",
+    "\\requirements"
+  ],
+  "SelectedNode": "\\.github\\workflows\\python-test.yml",
+  "PreviewInSolutionExplorer": false
+}

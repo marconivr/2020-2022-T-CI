@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\ISSUE_TEMPLATE",
+    "\\bin",
+    "\\docs",
+    "\\flussi",
+    "\\log",
+    "\\requirements",
+    "\\sources_files"
+  ],
+  "SelectedNode": "\\bin\\updatepending.vbs",
+  "PreviewInSolutionExplorer": false
+}

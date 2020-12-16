@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\workflows",
+    "\\bin",
+    "\\docs",
+    "\\flussi",
+    "\\log",
+    "\\requirements"
+  ],
+  "SelectedNode": "\\bin\\test_product.py",
+  "PreviewInSolutionExplorer": false
+}

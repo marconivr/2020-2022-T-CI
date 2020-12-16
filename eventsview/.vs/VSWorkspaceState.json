@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\workflows",
+    "\\bin",
+    "\\docs",
+    "\\flussi",
+    "\\log",
+    "\\requirements"
+  ],
+  "SelectedNode": "\\bin\\eventsview.py",
+  "PreviewInSolutionExplorer": false
+}

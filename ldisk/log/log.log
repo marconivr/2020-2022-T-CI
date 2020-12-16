@@ -1,0 +1,174 @@
+Opened all files and database connected
+Start time: 2020-10-23 09:37:13.737055
+Running: ldisk.py
+csv now initialized
+csv now initialized
+database now initialized
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+Unchecked updated
+End time: 2020-10-23 09:37:23.551579
+Total time: 0:00:09.814524
+
+Opened all files and database connected
+Start time: 2020-10-23 09:44:26.311473
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+Unchecked updated
+End time: 2020-10-23 09:44:36.056677
+Total time: 0:00:09.745204
+
+Opened all files and database connected
+Start time: 2020-10-23 09:46:46.310771
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+Unchecked updated
+End time: 2020-10-23 09:46:58.065875
+Total time: 0:00:11.755104
+
+Opened all files and database connected
+Start time: 2020-10-23 09:48:04.023908
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+Unchecked updated
+End time: 2020-10-23 09:48:15.706964
+Total time: 0:00:11.683056
+
+Opened all files and database connected
+Start time: 2020-10-23 09:48:42.885989
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+ - localhost
+   - Istructions: Win32_NetworkClient && Win32_NetworkProtocol
+Unchecked updated
+End time: 2020-10-23 09:49:11.345826
+Total time: 0:00:28.459837
+
+Opened all files and database connected
+Start time: 2020-10-24 18:16:43.030852
+Running: ldisk.py
+csv now initialized
+csv now initialized
+database now initialized
+ - localhost
+Opened all files and database connected
+Start time: 2020-10-24 18:18:21.002537
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+Opened all files and database connected
+Start time: 2020-10-24 18:18:45.000581
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 18:18:58.604909
+Total time: 0:00:13.604328
+
+Opened all files and database connected
+Start time: 2020-10-24 18:23:04.565871
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 18:23:18.134552
+Total time: 0:00:13.568681
+
+Opened all files and database connected
+Start time: 2020-10-24 18:23:38.826703
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 18:23:52.392793
+Total time: 0:00:13.566090
+
+Opened all files and database connected
+Start time: 2020-10-24 18:25:10.157679
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 18:25:23.731900
+Total time: 0:00:13.574221
+
+Opened all files and database connected
+Start time: 2020-10-24 18:47:56.246030
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 18:48:09.827907
+Total time: 0:00:13.581877
+
+Opened all files and database connected
+Start time: 2020-10-24 19:04:40.975901
+Running: ldisk.py
+csv now initialized
+database now initialized
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+ - localhost
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+   - Istruction: Win32_LogicalDisk
+Unchecked updated
+End time: 2020-10-24 19:04:54.534007
+Total time: 0:00:13.558106
+
