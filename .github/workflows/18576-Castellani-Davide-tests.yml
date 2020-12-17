@@ -1,0 +1,201 @@
+
+# Test all for Castellani Davide
+name: Test all for Castellani Davide
+
+on: [push, pull_request]
+
+jobs:
+  agent:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd agent
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd agent
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd agent
+        pytest
+
+  eventsview:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd eventsview
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd eventsview
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd eventsview
+        pytest
+        
+  ldisk:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd ldisk
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd ldisk
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd ldisk
+        cd bin
+        pytest
+        
+  macaddresssep:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [ubuntu-20.04, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd macaddresssep
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install -r requirements/requirements.txt
+    - name: Test with pytest
+      run: |
+        cd macaddresssep
+        cd bin
+        pytest
+        
+  maccharger:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd maccharger
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd maccharger
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd maccharger
+        pytest
+      
+  netchange:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd netchange
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements/requirements.txt ]; then pip install -r requirements/requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        cd netchange
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd netchange
+        pytest
+        
+  product:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd product
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd product
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd product
+        cd bin
+        pytest
