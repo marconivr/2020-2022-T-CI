@@ -228,6 +228,7 @@ jobs:
         python-version: 3.8
     - name: Install py3 dependencies
       run: |
+        cd sync
         python -m pip install --upgrade pip
         pip install flake8 pytest
         pip install -r requirements/requirements.txt
