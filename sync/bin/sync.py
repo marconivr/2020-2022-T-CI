@@ -6,10 +6,10 @@ import pymysql
 from datetime import datetime
 
 __author__ = "help@castellanidavide.it"
-__version__ = "01.02 2020-12-19"
+__version__ = "01.02 2020-12-20"
 
 class sync:
-	def __init__ (self, agent=False, input_folder=None, output_folder=None, debug=False,):
+	def __init__ (self, agent=False, sync_DB=True, input_folder=None, output_folder=None, debug=False,):
 		"""Where it all begins
 		"""
 
@@ -17,9 +17,10 @@ class sync:
 		self.start_time = datetime.now()
 		self.debug = debug
 		self.agent = agent
+		self.sync_DB = sync_DB
 
 		# Open log
-		self.log = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.strftime('%Y%m%d')}sync.log"), "a+")
+		self.log = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.timestamp()}sync.log"), "a+")
 		self.log.write("Execution_code,Message,time")
 		self.print(f"Start")
 		self.print("Running: sync.py")
@@ -38,17 +39,21 @@ class sync:
 
 		# Read the config controller
 		self.local_files = open(os.path.join(self.input_folder, "file_to_upload_and_where.csv"), "r").read()
-		self.print("Configuration readed")
+		try:
+			if self.sync_DB : self.config = eval(open(os.path.join(self.input_folder, "settings.json"), "r").read())
+			if self.sync_DB : self.print(str(self.config))
 
-		# Sync offline
-		self.copy()
-		
-		if (not self.agent):
-			# Sync online if possible
-			try:
-				self.online_sync_all()
-			except:
-				self.print("Internet/ DB(s) not avariable")
+			if (not self.agent or (self.agent and not self.sync_DB)):
+				self.copy()	# Copy to the wanted folder
+
+			if self.sync_DB:
+				# Sync online if possible
+				try:
+					self.online_sync_all()
+				except:
+					self.print("Internet/ DB(s) not avariable")
+		except:
+			print("Error reading setting.json file, make sure it is in the input_folder and have correct syntax")
 		
 		# End
 		self.print(f"End time: {datetime.now()}")
@@ -132,34 +137,37 @@ class sync:
 	def online_sync_all(self):
 		""" If possible update all
 		"""
-		for i, file in enumerate(sync.csv2array(self.local_files)[1:]):
+		# Get files to upload
+		files = []
+		for (dirpath, dirnames, filenames) in os.walk(self.output_folder):
+			files = filenames
+			break
+		while "test.csv" in files: files.remove("test.csv") 
+
+		for i, file in enumerate(files):
 			self.print(f" - {i}° File")
 			
 			# Get configuration
-			host = file[2]
-			port = int(file[3])
-			user = file[5]
-			password = file[6]
-			database = file[4]
-			tablename = file[1].replace(".csv", "")
+			self.sync_online_single(file, i, tablename=file.replace(".csv", ""))
 
-			# Connenct to the DB
-			connection = pymysql.connect(host, user, password, database, port)
-			self.print(f"   - Connected {i}° database")
-
-			self.sync_online_single(file, connection, database, tablename)
-
-	def sync_online_single(self, file, connection, database, tablename):
+	def sync_online_single(self, file, i, tablename):
 		""" Sync a single file
 		"""
+		# Connenct to the DB for every file
+		connection = pymysql.connect(self.config['host'], self.config['username'], self.config['password'], self.config['database'], int(self.config['port']))
+		self.print(f"   - Connected {i}° database for {tablename} table")
+
 		with connection.cursor() as cursor:
-			file_to_sync = sync.csv2array(open(os.path.join(self.input_folder, "cloned", f"""{sync.PC_name()}_{file[1]}"""), "r").read())
+			file_to_sync = sync.csv2array(open(os.path.join(self.output_folder, file), "r").read())
+			self.print(open(os.path.join(self.output_folder, file), "r").read())
+			self.print(f"   - File to sync readed ({file}): {file_to_sync}")
 				
 			# If not exist create database
 			variabiles = sync.array2csv([[f"""{a.replace(' ', '_')}""" for a in file_to_sync[0]],]).replace('""', '"').replace('"', '').replace('\n', '').replace('\\', '').replace('/', '')
+			self.print(f"   - Variabiles = {variabiles}")
 
 			try:
-				cursor.execute(f"""CREATE TABLE IF NOT EXISTS {database}.{tablename} (ID int AUTO_INCREMENT,{str([i+' varchar(255),' for i in variabiles.split(",")])[1:-1].replace("', '", "")[1:-2]},PRIMARY KEY (ID));""")
+				cursor.execute(f"""CREATE TABLE IF NOT EXISTS {self.config['database']}.{tablename} (ID int AUTO_INCREMENT,{str([i+' varchar(255),' for i in variabiles.split(",")])[1:-1].replace("', '", "")[1:-2]},PRIMARY KEY (ID));""")
 			except:
 				cursor.execute(f"""CREATE TABLE IF NOT EXISTS {tablename} (ID int AUTO_INCREMENT,{str([i+' varchar(255),' for i in variabiles.split(",")])[1:-1].replace("', '", "")[1:-2]},PRIMARY KEY (ID));""")
 			self.print(f"   - Connected {tablename} table")
@@ -169,20 +177,23 @@ class sync:
 				items = sync.array2csv([items,])[:-1:]
 
 				try:
-					cursor.execute(f"SELECT * FROM {database}.{tablename} WHERE ({variabiles}) = ({items});")
+					cursor.execute(f"SELECT * FROM {self.config['database']}.{tablename} WHERE ({variabiles}) = ({items});")
 				except:
 					cursor.execute(f"SELECT * FROM {tablename} WHERE ({variabiles}) = ({items});")
+				self.print(f"     - Read if already exists {items}")
 
 				if len(cursor.fetchall()) == 0: # If not exist add it
 					try:
-						cursor.execute(f"INSERT INTO {database}.{tablename} ({variabiles}) VALUES ({items});")
+						cursor.execute(f"INSERT INTO {self.config['database']}.{tablename} ({variabiles}) VALUES ({items});")
 					except:
 						cursor.execute(f"INSERT INTO {tablename} ({variabiles}) VALUES ({items});")
 					self.print(f"   - Values added ({items})")
+				self.print(f"     - Added {items}")
 
 		# Push changes
 		connection.commit()
 		connection.close()
+		self.print("Ended single connection")
 
 if __name__ == "__main__":
 	# Check if user needs an help
@@ -192,6 +203,8 @@ if __name__ == "__main__":
 							"\t[--agentless | -al]",
 							"\t[--batch | -b]",
 							"\t[--debug | -d]",
+							"\t[--sync | -s]",
+							"\t[--nsync | -ns]",
 							"\t[--input_folder= | -if=]",
 							"\t[--output_folder= | -of=]",
 							"",
@@ -200,6 +213,8 @@ if __name__ == "__main__":
 							"\t--agentless | -al			\tRun in the Agentless mode or Run as the core manager of the Agent structure",
 							"\t--batch | -b					Setting for the batch file",
 							"\t--debug | -d					Choose this if you want debug option (for eg. you can see the output on the screen)",
+							"\t--sync | -s					Try to sync online",
+							"\t--nsync | -ns				Don't sync online",
 							"",
 							"These are the sync setting:",
 							"\t--input_folder= | -if=		\t\t(OPTIONAL) You can choose the input file",
@@ -219,6 +234,7 @@ if __name__ == "__main__":
 		agent = False # if Talse is agentless
 		input_folder = None
 		output_folder = None
+		sync_DB = True
 
 		# Check inputs
 		for arg in sys.argv:
@@ -234,6 +250,12 @@ if __name__ == "__main__":
 			if "--debug" in arg or "-d" in arg:
 				debug = True
 
+			if "--sync" in arg or "-s" in arg:
+				sync_DB = True
+
+			if "--nsync" in arg or "-ns" in arg:
+				sync_DB = False
+
 			if "--input_folder=" in arg or "-if=" in arg:
 				input_folder = arg.replace("--input_folder=", "").replace("-if=", "")
 
@@ -241,6 +263,6 @@ if __name__ == "__main__":
 				output_folder = arg.replace("--output_folder=", "").replace("-of=", "")
 
 		try:
-			sync(agent=agent, input_folder=input_folder, output_folder=output_folder, debug=debug)
+			sync(agent=agent, sync_DB=sync_DB, input_folder=input_folder, output_folder=output_folder, debug=debug)
 		except:
 			raise Exception("There is an error, make sure you have made done all settings.")
