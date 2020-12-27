@@ -3,12 +3,13 @@
     "",
     "\\.github",
     "\\.github\\ISSUE_TEMPLATE",
+    "\\.github\\workflows",
     "\\bin",
     "\\docs",
     "\\flussi",
     "\\log",
     "\\requirements"
   ],
-  "SelectedNode": "\\bin\\usb.py",
+  "SelectedNode": "\\bin\\usb.bat",
   "PreviewInSolutionExplorer": false
 }

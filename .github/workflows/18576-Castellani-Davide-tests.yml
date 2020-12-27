@@ -33,6 +33,26 @@ jobs:
         cd agent
         pytest
 
+  bc:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd bc
+        python -m pip install --upgrade pip
+        pip install -r requirements/requirements.txt
+    - name: Try to run
+      run: |
+        cd bc
+        ./bin/bc.bat
+
   eventsview:
 
     runs-on: windows-latest
@@ -171,6 +191,62 @@ jobs:
         cd netchange
         pytest
         
+  netinfo:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd netinfo
+        python -m pip install --upgrade pip
+        pip install flake8
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd netinfo
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test
+      run: |
+        cd netinfo
+        python bin/netinfo.py
+        
+  osversion:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        cd osversion
+        python -m pip install --upgrade pip
+        pip install flake8
+        pip install -r requirements/requirements.txt
+    - name: Lint with flake8
+      run: |
+        cd osversion
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test
+      run: |
+        cd osversion
+        python bin/osversion.py
+        
   product:
 
     runs-on: windows-latest
@@ -292,6 +368,7 @@ jobs:
 
   # Sync Agent part 2 
   sync-agent-2:
+
     needs: sync-agent-1
     runs-on: ${{ matrix.os }}
     strategy:
@@ -355,3 +432,16 @@ jobs:
       run: |
         mysql -uroot -psyncpws -h0.0.0.0 -P32768 -e "SHOW TABLES FROM sync;" # Check
         mysql -uroot -psyncpws -h0.0.0.0 -P32768 -e "SELECT * FROM sync.PCname_testfile;" # Show my test table content
+
+  usb:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup
+      run: |
+        ./bin/setup.bat
+    - name: Try to run
+      run: |
+        ./bin/usb.bat

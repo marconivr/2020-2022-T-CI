@@ -4,6 +4,9 @@ CLS
 REM bc
 REM Made by Castellani Davide
 
+REM change directory to the current (for the scheduled task)
+CD /D "%~dp0"
+
 ECHO Start time: %DATE% %TIME% >> ..\log\trace.log
 
 ECHO Opened all files >> ..\log\trace.log

@@ -3,6 +3,7 @@
     "",
     "\\.github",
     "\\.github\\ISSUE_TEMPLATE",
+    "\\.github\\workflows",
     "\\bin",
     "\\docs",
     "\\flussi",
@@ -10,6 +11,6 @@
     "\\requirements",
     "\\sources_files"
   ],
-  "SelectedNode": "\\bin\\updatepending.vbs",
+  "SelectedNode": "\\bin\\bc.bat",
   "PreviewInSolutionExplorer": false
 }
