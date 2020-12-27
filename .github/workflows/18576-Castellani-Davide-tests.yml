@@ -441,7 +441,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Setup
       run: |
+        cd usb
         ./bin/setup.bat
     - name: Try to run
       run: |
+        cd usb
         ./bin/usb.bat
