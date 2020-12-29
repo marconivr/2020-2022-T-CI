@@ -20,7 +20,7 @@ jobs:
         python3 << EOF
         import os
         file_content = '# :octocat: Lavori di Castellani Davide (18576) :octocat:\n![](https://www.castellanidavide.it/assets/img/main-covers/main.jpg)\n'
-        for i in sorted([x for x in os.listdir('./') if not x[0] == '.' and os.path.isdir(x)]): file_content += f' - [{i}](https://github.com/CastellaniDavideTest/Test22-2020-2022-T-CI/blob/18576/{i}/docs/README.md)\n'
+        for i in sorted([x for x in os.listdir('./') if not x[0] == '.' and os.path.isdir(x)]): file_content += f' - [{i}](https://github.com/$GITHUB_REPOSITORY/blob/18576/{i}/docs/README.md)\n'
         
         file_contents = '\n---\nMade by Castellani Davide \nIf you have any problem please contact me:\n - help@castellanidavide.it\n'
         open('README.md', 'w+').write(file_content)                          
