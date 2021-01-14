@@ -3,7 +3,10 @@
     "",
     "\\.github",
     "\\bin",
-    "\\log"
+    "\\docs",
+    "\\flussi",
+    "\\log",
+    "\\requirements"
   ],
   "SelectedNode": "\\bin\\agent.py",
   "PreviewInSolutionExplorer": false

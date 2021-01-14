@@ -10,7 +10,7 @@ import requests
 import string
 
 __author__ = "help@castellanidavide.it"
-__version__ = "01.01 2020-11-20"
+__version__ = "01.03 2021-01-14"
 
 class agent:
 	def __init__ (self, folder=None, debug=False, vs=False, parts=["osversion", "netinfo", "eventsview", "product"]):
@@ -136,13 +136,13 @@ class agent:
 	def initlog(self):
 		"""Writes on the screen and in the log file
 		"""
-		self.log.write("Execution_code,Message,time")
+		self.log.write("Execution_code,Message,user_friendly_time,time")
 
 	def print(self, item):
 		"""Writes on the screen and in the log file
 		"""
 		if self.debug : print(item)
-		self.log.write(f""""{self.start_time.timestamp()}","{item}","{datetime.now().timestamp()}"\n""")
+		self.log.write(f""""{self.start_time.timestamp()}","{item}","{str(datetime.now())}","{datetime.now().timestamp()}"\n""")
 
 	def init_csv(self, intestations={"osversion": "PC_name, OS, OS_version,Date_local,Date_universal_microsecond", "netinfo": "PCname,Caption,Description,Status,Manufacturer,Name,GuaranteesDelivery,GuaranteesSequencing,MaximumAddressSize,MaximumMessageSize,SupportsConnectData,SupportsEncryption,SupportsGracefulClosing,SupportsGuaranteedBandwidth,SupportsQualityofService,DNSDomain,DHCPEnabled,IP_Type,DefaultIPGateway,MACAddress,MACAdress_company,Date_local,Date_universal_microsecond", "eventsview": "PCname,User,Category,Type,CategoryString,EventCode,EventIdentifier,EventType,Logfile,RecordNumber,Date_local,Date_universal_microsecond", "product": "PC_name,Caption,Description,IdentifyingNumber,InstallDate,InstallLocation,Language,Name,ProductID,URLInfoAbout,URLUpdateInfo,Vendor,Version,Date_local,Date_universal_microsecond"}):
 		"""Init the csv files
@@ -249,5 +249,4 @@ if __name__ == "__main__":
 		if "--module=" in arg or "-m=" in arg:
 			parts = [arg.replace("--module=", "").replace("-m=", ""), ]
 
-
-	agent(folder, debug, vs, parts)
+	if(agent(folder, debug, vs, parts) == None): print("Done")
