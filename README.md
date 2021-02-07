@@ -10,5 +10,6 @@
  - [netinfo](https://github.com/marconivr/2020-2022-T-CI/blob/18576/netinfo/docs/README.md)
  - [osversion](https://github.com/marconivr/2020-2022-T-CI/blob/18576/osversion/docs/README.md)
  - [product](https://github.com/marconivr/2020-2022-T-CI/blob/18576/product/docs/README.md)
+ - [pseudo](https://github.com/marconivr/2020-2022-T-CI/blob/18576/pseudo/docs/README.md)
  - [sync](https://github.com/marconivr/2020-2022-T-CI/blob/18576/sync/docs/README.md)
  - [usb](https://github.com/marconivr/2020-2022-T-CI/blob/18576/usb/docs/README.md)
