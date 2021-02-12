@@ -1,0 +1,7 @@
+"ID","","NameSheet","Data di nascita","Comune","Provincia","Email","Telefono","Classe","Sezione","Indirizzo"
+"1612973793000000","Data di nascita","Comune","","","","","","","",""
+"1612973793000000","dd/mm/yyyy","Comune_template","","","","","","","",""
+"1612973793000000","dd/mm/yyyy","Comune_template","","","","","","","",""
+"1612973793000000","example","","","","","","","","",""
+"1612973793000004","","example","dd/mm/yyyy","Comune_template_csv","Verona","mail1@mail.com","123456789","n","Sezione","Indirizzo"
+"1612973793000005","","example","dd/mm/yyyy","Comune_template_csv","Verona","mail1@mail.com","123456789","n","Sezione","Indirizzo,"
