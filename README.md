@@ -2,6 +2,7 @@
 ![](https://www.castellanidavide.it/assets/img/main-covers/main.jpg)
  - [agent](https://github.com/marconivr/2020-2022-T-CI/blob/18576/agent/docs/README.md)
  - [bc](https://github.com/marconivr/2020-2022-T-CI/blob/18576/bc/docs/README.md)
+ - [calcolatrice](https://github.com/marconivr/2020-2022-T-CI/blob/18576/calcolatrice/docs/README.md)
  - [eventsview](https://github.com/marconivr/2020-2022-T-CI/blob/18576/eventsview/docs/README.md)
  - [ldisk](https://github.com/marconivr/2020-2022-T-CI/blob/18576/ldisk/docs/README.md)
  - [macaddresssep](https://github.com/marconivr/2020-2022-T-CI/blob/18576/macaddresssep/docs/README.md)
