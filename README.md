@@ -13,6 +13,7 @@
  - [product](https://github.com/marconivr/2020-2022-T-CI/blob/18576/product/docs/README.md)
  - [produttore_e_consumatore](https://github.com/marconivr/2020-2022-T-CI/blob/18576/produttore_e_consumatore/docs/README.md)
  - [pseudo](https://github.com/marconivr/2020-2022-T-CI/blob/18576/pseudo/docs/README.md)
+ - [settings](https://github.com/marconivr/2020-2022-T-CI/blob/18576/settings/docs/README.md)
  - [sync](https://github.com/marconivr/2020-2022-T-CI/blob/18576/sync/docs/README.md)
  - [tabular_log](https://github.com/marconivr/2020-2022-T-CI/blob/18576/tabular_log/docs/README.md)
  - [usb](https://github.com/marconivr/2020-2022-T-CI/blob/18576/usb/docs/README.md)
