@@ -1,0 +1,2 @@
+####### requirements.txt #######
+tabular_log
