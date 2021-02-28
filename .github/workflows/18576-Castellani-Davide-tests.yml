@@ -364,6 +364,26 @@ jobs:
         cd bin
         pytest
         
+  settings:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        cd settings
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+        pip install -r requirements/requirements.txt
+    - name: Build
+      run: |
+        cd settings
+        python setup.py sdist bdist_wheel
+        
   # Sync Agentless 
   sync-agentless:
 
@@ -520,6 +540,27 @@ jobs:
       run: |
         mysql -uroot -psyncpws -h0.0.0.0 -P49153 -e "SHOW TABLES FROM sync;" # Check
         mysql -uroot -psyncpws -h0.0.0.0 -P49153 -e "SELECT * FROM sync.PCname_testfile;" # Show my test table content
+        
+  tabular_log:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        cd tabular_log
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+        pip install -r requirements/requirements.txt
+    - name: Build
+      run: |
+        cd tabular_log
+        python setup.py sdist bdist_wheel
+        
 
   usb:
 
