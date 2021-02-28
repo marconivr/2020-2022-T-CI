@@ -8,7 +8,7 @@
 Get and filter USB infos.
 
 You can see the project website here [https://castellanidavide.github.io/usb/](https://castellanidavide.github.io/usb/)
-![Funcionality image](./funcionality.png)
+![Funcionality image](https://raw.githubusercontent.com/CastellaniDavide/usb/main/docs/funcionality.png)
 
 ## Goals
  - [x] Get csv USBDview.exe output and save in temp.csv (bat)
