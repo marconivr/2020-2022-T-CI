@@ -3,7 +3,7 @@
 
 ## Description
 Sync losts of projects.
-![](./sync.svg)
+![](https://raw.githubusercontent.com/CastellaniDavide/sync/main/docs/sync.svg)
 
 ## Goals
  - [x] Clone files segnalized in local.csv
