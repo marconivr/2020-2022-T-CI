@@ -561,9 +561,7 @@ jobs:
         cd tabular_log
         python setup.py sdist bdist_wheel
         
-
   usb:
-
     runs-on: windows-latest
 
     steps:
