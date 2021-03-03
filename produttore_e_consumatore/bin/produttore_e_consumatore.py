@@ -8,7 +8,7 @@ from time import sleep
 from random import random
 
 __author__ = "help@castellanidavide.it"
-__version__ = "2.0 2021-2-28"
+__version__ = "2.1 2021-3-3"
 
 class produttore_e_consumatore:
 	def __init__ (self):
@@ -22,8 +22,8 @@ class produttore_e_consumatore:
 	def setup(self):
 		"""Setup
 		"""
-		self.log = tabular_log(path.join(path.dirname(path.abspath(__file__)), "..", "log", "trace.log"))
-		self.list_len = 100
+		self.log = tabular_log(path.join(path.dirname(path.abspath(__file__)), "..", "log", "trace.log"), title="calcolatrice")
+		self.list_len = 10
 		self.locks = [Lock()] * self.list_len
 		self.values = [None] * self.list_len
 
@@ -82,7 +82,7 @@ class produttore_e_consumatore:
 				self.threads.append(Thread(target=self.produttore, args=(i, f"linear #{i}")))
 				self.threads.append(Thread(target=self.consumatore, args=(i,)))
 		elif self.choise == 3:
-			for i in range(5 * len(self.values)):
+			for i in range(10 * len(self.values)):
 				self.threads.append(Thread(target=self.produttore, args=(i%len(self.values), f"circular #{i}")))
 				self.threads.append(Thread(target=self.consumatore, args=(i%len(self.values),)))
 

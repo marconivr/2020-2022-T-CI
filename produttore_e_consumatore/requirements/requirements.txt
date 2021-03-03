@@ -1,2 +1,2 @@
 ####### requirements.txt #######
-tabular_log
+tabular_log>=2.2
