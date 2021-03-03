@@ -22,7 +22,7 @@ class produttore_e_consumatore:
 	def setup(self):
 		"""Setup
 		"""
-		self.log = tabular_log(path.join(path.dirname(path.abspath(__file__)), "..", "log", "trace.log"), title="calcolatrice")
+		self.log = tabular_log(path.join(path.dirname(path.abspath(__file__)), "..", "log", "trace.log"), title="produttore_e_consumatore")
 		self.list_len = 10
 		self.locks = [Lock()] * self.list_len
 		self.values = [None] * self.list_len
