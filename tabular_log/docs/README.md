@@ -1,5 +1,5 @@
 # tabular_log
-[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/CastellaniDavide/cpp-tabular_log/blob/master/LICENSE) ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat) ![Version](https://img.shields.io/badge/version-v01.01-blue?style=flat) ![Language Python](https://img.shields.io/badge/language-Python-yellowgreen?style=flat) ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-All-blue?style=flat) [![On GitHub](https://img.shields.io/badge/on%20GitHub-True-green?style=flat&logo=github)](https://github.com/CastellaniDavide/tabular_log)
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/CastellaniDavide/cpp-tabular_log/blob/master/LICENSE) ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat) ![Version](https://img.shields.io/badge/version-v02.02-blue?style=flat) ![Language Python](https://img.shields.io/badge/language-Python-yellowgreen?style=flat) ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-All-blue?style=flat) [![On GitHub](https://img.shields.io/badge/on%20GitHub-True-green?style=flat&logo=github)](https://github.com/CastellaniDavide/tabular_log)
 
 ## Description
 Creates and manage a tabular log.
@@ -35,7 +35,19 @@ Creates and manage a tabular log.
  - python3 test_tabular_log.py
 
 # Changelog
- - [Version_01.01_2021-2-21](#Version_10_2021-2-21)
+ - [Version_02.02_2021-03-03](#Version_0202_2021-03-03)
+ - [Version_02.01_2021-03-03](#Version_0201_2021-03-03)
+ - [Version_01.01_2021-2-21](#Version_0101_2021-2-21)
+
+## Version_02.02_2021-03-03
+ - Fixed a bug
+
+## Version_02.01_2021-03-03
+ - Optimized log funtion
+ - Added some "standard" parameter
+ - Added the possibility to send log to the server
+ - Now faster, using threads
+ - Added verbose option
 
 ## Version_01.01_2021-2-21
  - Initial version
