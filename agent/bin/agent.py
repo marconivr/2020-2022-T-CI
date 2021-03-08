@@ -8,109 +8,132 @@ from datetime import datetime
 from ipaddress import ip_address, IPv4Address
 import requests
 import string
+from tabular_log import tabular_log
+from settings import settings
+from json import loads, dumps
 
 __author__ = "help@castellanidavide.it"
-__version__ = "01.03 2021-01-14"
+__version__ = "02.01 2021-03-08"
 
 class agent:
-	def __init__ (self, folder=None, debug=False, vs=False, parts=["osversion", "netinfo", "eventsview", "product"]):
+	def __init__ (self):
 		""" Where it all begins
 		"""
 		#Setup basic variabiles
 		self.start_time = datetime.now()
-		self.debug = debug
-		self.vs = vs
-		self.parts = parts
-		while (None in self.parts): self.parts.remove(None)
 
-		if folder == None:
-			self.folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "flussi")
-		else:
-			self.folder = folder
-
-		try:
-			open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.strftime('%Y%m%d')}agent.log"), "r+").read()
-			self.log = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.strftime('%Y%m%d')}agent.log"), "a+")
-		except:
-			self.log = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.strftime('%Y%m%d')}agent.log"), "a+")
-			self.initlog()
-
-		self.csv_names = open(os.path.join(self.folder, "computers.csv"), "r+")
+		# Read log & settings
+		self.settings = settings(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "settings", "settings.yaml")).read()
+		self.log = tabular_log(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "log", f"{self.start_time.strftime('%Y%m%d')}agent.log"), "agent", verbose=self.settings['debug'])
+		
+		# Prepare other files
+		if self.settings['folder'] == None : self.settings['folder'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "flussi")
+		print(self.settings['folder'])
+		self.csv_names = open(os.path.join(self.settings['folder'], "computers.csv"), "r+")
 		self.csv_agent_history = {}
 		self.csv_agent = {}
-		for i in parts:
-			self.csv_agent_history[i] = open(os.path.join(self.folder, f"{i}_history.csv"), "a+")
-			self.csv_agent_history[i].seek(0)
-			self.csv_agent[i] = open(os.path.join(self.folder, f"{i}.csv"), "w+")
-		self.csv_unchecked = open(os.path.join(self.folder, "unchecked_PC.csv"), "r+").read()
-		self.csv_unchecked2 = open(os.path.join(self.folder, "unchecked_PC.csv"), "w+")
+		for key, value in self.settings["parts"].items():
+			if value["validity"]:
+				self.csv_agent_history[key] = open(os.path.join(self.settings['folder'], f"{key}_history.csv"), "a+")
+				self.csv_agent_history[key].seek(0)
+				self.csv_agent[key] = open(os.path.join(self.settings['folder'], f"{key}.csv"), "w+")
+		self.csv_unchecked = open(os.path.join(self.settings['folder'], "unchecked_PC.csv"), "r+").read()
+		self.csv_unchecked2 = open(os.path.join(self.settings['folder'], "unchecked_PC.csv"), "w+")
 				
-		self.print(f"Start")
-		self.print(f"Opened all files")
-		self.print("Running: agent.py")		
+		self.log.print("Start")
+		self.log.print("Opened all files")
+		self.log.print("Running: agent.py")		
 		
 		# Init files
 		self.init_csv()
 
 		# Core
-		agent.print_all(self)
+		agent.core(self)
 		agent.update_unchecked_PC(self)
 
 		# End
 		self.csv_names.close()
-		for i in parts:
-			self.csv_agent[i].close()
-			self.csv_agent_history[i].close()
+		for key, value in self.settings["parts"].items():
+			if value["validity"]:
+				self.csv_agent[key].close()
+				self.csv_agent_history[key].close()
 		self.csv_unchecked2.close()
-		self.print(f"End time")
-		self.print(f"Total time: {datetime.now() - self.start_time}")
-		self.log.close()
+		self.log.print(f"End time")
+		self.log.print(f"Total time: {datetime.now() - self.start_time}")
 
-	def print_all(self):
-		"""Prints the infos by Win32_agent
+	def write_data(self, part, data):
+		""" Write the same data into the two file of the istance
+		"""
+		self.csv_agent[part].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
+		self.csv_agent_history[part].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
+		
+		if self.settings["parts"][part]["db"]["enabled"]:
+			index = agent.csv2array(self.settings["parts"][part]["intestation"])[0]
+			infos = agent.csv2array(data)[0]
+
+			dict_values = {}
+			values_intestation = []
+			values = []
+
+			for key, value in self.settings["parts"][part]["db"]["change_intestation"].items():
+				dict_values[key] = infos[index.index(value)][1:-1]
+
+			for key, value in self.settings["parts"][part]["db"]["forced_values"].items():
+				dict_values[key] = value
+
+			for key, value in dict_values.items():
+				values_intestation.append(key)
+				values.append(value)
+
+			values_intestation = agent.array2csv([values_intestation,]).replace("\n", "").replace("\"", "")
+			values = agent.array2csv([values,]).replace("\n", "")
+			payload = dumps({"operation": "sql", "sql": f"INSERT INTO {self.settings['parts'][part]['db']['table']} ({values_intestation}) VALUES ({values})"}).replace("\\\"", "'")
+
+			try:
+				response = requests.request("POST", self.settings["parts"][part]["db"]["url"], headers={'Content-Type': 'application/json','Authorization': f'''Basic {self.settings["parts"][part]["db"]["token"]}'''}, data=payload)
+				self.log.print(f"    - By DB: {response.text}")
+			except:
+				self.log.print(f"    - Failed the DB insert")
+
+	def analyze_PC(self, PC_name):
+		"""Analyze the PC
+		"""
+		conn = wmi.WMI("." if self.settings['debug'] else PC_name)
+
+		if self.settings["parts"]["osversion"]["validity"]:
+			self.log.print("  - Istruction: Win32_OperatingSystem")
+			for os_info in conn.Win32_OperatingSystem(["Caption", "Version"]):
+				self.write_data("osversion", data=f"'{'My PC' if self.settings['debug'] else PC_name}','{os_info.Caption}','{os_info.Version}','{datetime.now()}','{int(datetime.utcnow().timestamp() * 10 ** 6)}'\n")
+		
+		if self.settings["parts"]["netinfo"]["validity"]:
+			self.log.print("  - Istruction: Win32_NetworkClient && Win32_NetworkProtocol")
+			for network_client, network_protocol, other in zip(conn.Win32_NetworkClient(["Caption", "Description", "Status", "Manufacturer", "Name"]), conn.Win32_NetworkProtocol(["GuaranteesDelivery", "GuaranteesSequencing", "MaximumAddressSize", "MaximumMessageSize", "SupportsConnectData", "SupportsEncryption", "SupportsEncryption", "SupportsGracefulClosing", "SupportsGuaranteedBandwidth", "SupportsQualityofService"]), conn.Win32_NetworkAdapterConfiguration(["DNSDomain", "DHCPEnabled", "DefaultIPGateway", "MACAddress"], IPEnabled=True)):
+				try:
+					for i in range(len(other.DefaultIPGateway)): 
+						self.write_data("netinfo", data=f"""'{'My PC' if self.settings['debug'] else PC_name}','{network_client.Caption}','{network_client.Description}','{network_client.Status}','{network_client.Manufacturer}','{network_client.Name}','{network_protocol.GuaranteesDelivery}','{network_protocol.GuaranteesSequencing}','{network_protocol.MaximumAddressSize}','{network_protocol.MaximumMessageSize}','{network_protocol.SupportsConnectData}','{network_protocol.SupportsEncryption}','{network_protocol.SupportsGracefulClosing}','{network_protocol.SupportsGuaranteedBandwidth}','{network_protocol.SupportsQualityofService}','{other.DNSDomain}','{other.DHCPEnabled}','{"IPv4" if type(ip_address(other.DefaultIPGateway[i])) is IPv4Address else "IPv6"}','{other.DefaultIPGateway[i] if type(ip_address(other.DefaultIPGateway[i])) is IPv4Address else self.MACnormalization(other.DefaultIPGateway[i])}','{self.MACnormalization(other.MACAddress)}','{requests.get(f"http://macvendors.co/api/{other.MACAddress}").json()['result']['company']}','{datetime.now()}','{int(datetime.utcnow().timestamp() * 10 ** 6)}'\n""")
+				except:
+					pass
+		
+		if self.settings["parts"]["eventsview"]["validity"]:
+			self.log.print("  - Istruction: Win32_NTLogEvent")
+			for events_view in conn.Win32_NTLogEvent(['ComputerName ', 'User', 'Category', 'Type', 'CategoryString', 'EventCode', 'EventIdentifier', 'EventType', 'Logfile', 'RecordNumber'], type="Error"):
+				self.write_data("eventsview", data=f"'{'My PC' if self.settings['debug'] else PC_name}','{events_view.User}','{events_view.Category}','{events_view.Type}','{events_view.CategoryString}','{events_view.EventCode}','{events_view.EventIdentifier}','{events_view.EventType}','{events_view.Logfile}','{events_view.RecordNumber}','{self.start_time}','{self.start_time.timestamp()}'\n")
+		
+		if self.settings["parts"]["product"]["validity"]:
+			self.log.print("  - Istruction: Win32_Product")
+			for product_infos in conn.Win32_Product(["Caption", "Description", "IdentifyingNumber", "InstallDate", "InstallLocation", "Language", "Name", "ProductID", "URLInfoAbout", "URLUpdateInfo", "Vendor", "Version"]):
+				self.write_data("product", data=f"'{'My PC' if self.settings['debug'] else PC_name}','{product_infos.Caption}','{product_infos.Description}','{product_infos.IdentifyingNumber}','{product_infos.InstallDate}','{product_infos.InstallLocation}','{product_infos.Language}','{product_infos.Name}','{product_infos.ProductID}','{product_infos.URLInfoAbout}','{product_infos.URLUpdateInfo}','{product_infos.Vendor}','{product_infos.Version}','{self.start_time}','{self.start_time.timestamp()}'\n")
+
+	def core(self):
+		"""The core of the run
 		"""
 		self.fail = []
 
-		self.print("- Run core")
-		for PC_name in ("My PC, debug option",) if self.debug else self.csv_names.read().split("\n")[1:]:
-			if agent.check_PC("localhost" if self.debug else PC_name):			
-				conn = wmi.WMI("." if self.debug else PC_name)
-				self.print(f" - {PC_name}")
-
-				for i in self.parts:
-					if i == "osversion":
-						self.print("  - Istructions: Win32_OperatingSystem")
-						for os_info in conn.Win32_OperatingSystem(["Caption", "Version"]):
-							data = f"'{'My PC' if self.debug else PC_name}','{os_info.Caption}','{os_info.Version}','{datetime.now()}','{int(datetime.utcnow().timestamp() * 10 ** 6)}'\n"
-							self.csv_agent["osversion"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-							self.csv_agent_history["osversion"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-
-					elif i == "netinfo":
-						self.MACsep = '-'
-						self.print("  - Istructions: Win32_NetworkClient && Win32_NetworkProtocol")
-						for network_client, network_protocol, other in zip(conn.Win32_NetworkClient(["Caption", "Description", "Status", "Manufacturer", "Name"]), conn.Win32_NetworkProtocol(["GuaranteesDelivery", "GuaranteesSequencing", "MaximumAddressSize", "MaximumMessageSize", "SupportsConnectData", "SupportsEncryption", "SupportsEncryption", "SupportsGracefulClosing", "SupportsGuaranteedBandwidth", "SupportsQualityofService"]), conn.Win32_NetworkAdapterConfiguration(["DNSDomain", "DHCPEnabled", "DefaultIPGateway", "MACAddress"], IPEnabled=True)):
-							try:
-								for i in range(len(other.DefaultIPGateway)):
-									data = f"""'{'My PC' if self.debug else PC_name}','{network_client.Caption}','{network_client.Description}','{network_client.Status}','{network_client.Manufacturer}','{network_client.Name}','{network_protocol.GuaranteesDelivery}','{network_protocol.GuaranteesSequencing}','{network_protocol.MaximumAddressSize}','{network_protocol.MaximumMessageSize}','{network_protocol.SupportsConnectData}','{network_protocol.SupportsEncryption}','{network_protocol.SupportsGracefulClosing}','{network_protocol.SupportsGuaranteedBandwidth}','{network_protocol.SupportsQualityofService}','{other.DNSDomain}','{other.DHCPEnabled}','{"IPv4" if type(ip_address(other.DefaultIPGateway[i])) is IPv4Address else "IPv6"}','{other.DefaultIPGateway[i] if type(ip_address(other.DefaultIPGateway[i])) is IPv4Address else self.MACnormalization(other.DefaultIPGateway[i])}','{self.MACnormalization(other.MACAddress)}','{requests.get(f"http://macvendors.co/api/{other.MACAddress}").json()['result']['company']}','{datetime.now()}','{int(datetime.utcnow().timestamp() * 10 ** 6)}'\n"""
-									self.csv_agent["netinfo"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-									self.csv_agent_history["netinfo"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-							except:
-								pass
-
-					elif i == "eventsview":
-						self.print("  - Istruction: Win32_NTLogEvent")
-						for events_view in conn.Win32_NTLogEvent(['ComputerName ', 'User', 'Category', 'Type', 'CategoryString', 'EventCode', 'EventIdentifier', 'EventType', 'Logfile', 'RecordNumber'], type="Error"):
-							data = f"'{'My PC' if self.debug else PC_name}','{events_view.User}','{events_view.Category}','{events_view.Type}','{events_view.CategoryString}','{events_view.EventCode}','{events_view.EventIdentifier}','{events_view.EventType}','{events_view.Logfile}','{events_view.RecordNumber}','{self.start_time}','{self.start_time.timestamp()}'\n"
-							self.csv_agent["eventsview"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-							self.csv_agent_history["eventsview"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-		
-					elif i == "product":
-						self.print("  - Istruction: Win32_Product")
-						for product_infos in conn.Win32_Product(["Caption", "Description", "IdentifyingNumber", "InstallDate", "InstallLocation", "Language", "Name", "ProductID", "URLInfoAbout", "URLUpdateInfo", "Vendor", "Version"]):
-							data = f"'{'My PC' if self.debug else PC_name}','{product_infos.Caption}','{product_infos.Description}','{product_infos.IdentifyingNumber}','{product_infos.InstallDate}','{product_infos.InstallLocation}','{product_infos.Language}','{product_infos.Name}','{product_infos.ProductID}','{product_infos.URLInfoAbout}','{product_infos.URLUpdateInfo}','{product_infos.Vendor}','{product_infos.Version}','{self.start_time}','{self.start_time.timestamp()}'\n"
-							self.csv_agent["product"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-							self.csv_agent_history["product"].write(f"""{agent.make_csv_standard(data).replace("'", '"')}""")
-
+		self.log.print("- Run main part")
+		for PC_name in ("My PC, debug option",) if self.settings['debug'] else self.csv_names.read().split("\n")[1:]:
+			if agent.check_PC("localhost" if self.settings['debug'] else PC_name):
+				self.log.print(f" - {PC_name}")
+				self.analyze_PC(PC_name)
 			else:
 				self.fail.append(PC_name)
 
@@ -133,37 +156,27 @@ class agent:
 		data = ''.join(filter(lambda x: x in set(string.printable), data))
 		return data
 
-	def initlog(self):
-		"""Writes on the screen and in the log file
-		"""
-		self.log.write("Execution_code,Message,user_friendly_time,time")
-
-	def print(self, item):
-		"""Writes on the screen and in the log file
-		"""
-		if self.debug : print(item)
-		self.log.write(f""""{self.start_time.timestamp()}","{item}","{str(datetime.now())}","{datetime.now().timestamp()}"\n""")
-
-	def init_csv(self, intestations={"osversion": "PC_name, OS, OS_version,Date_local,Date_universal_microsecond", "netinfo": "PCname,Caption,Description,Status,Manufacturer,Name,GuaranteesDelivery,GuaranteesSequencing,MaximumAddressSize,MaximumMessageSize,SupportsConnectData,SupportsEncryption,SupportsGracefulClosing,SupportsGuaranteedBandwidth,SupportsQualityofService,DNSDomain,DHCPEnabled,IP_Type,DefaultIPGateway,MACAddress,MACAdress_company,Date_local,Date_universal_microsecond", "eventsview": "PCname,User,Category,Type,CategoryString,EventCode,EventIdentifier,EventType,Logfile,RecordNumber,Date_local,Date_universal_microsecond", "product": "PC_name,Caption,Description,IdentifyingNumber,InstallDate,InstallLocation,Language,Name,ProductID,URLInfoAbout,URLUpdateInfo,Vendor,Version,Date_local,Date_universal_microsecond"}):
+	def init_csv(self):
 		"""Init the csv files
 		"""
-		self.print("- Inizialize files")
+		self.log.print("- Inizialize files")
 
 		self.csv_unchecked2.write('"names","fail_reach","total_search"\n')
-		self.print("- Inizialized csv_unchecked2")
+		self.log.print("- Inizialized csv_unchecked2")
 
-		for i in self.parts:
-			self.print(f"- Inizialize {i} file")
-			if self.csv_agent_history[i].read() == "":
-				self.csv_agent_history[i].write(f"{intestations[i]}\n")
-				self.print(f"- Inizialized {i} history file")
-			self.csv_agent[i].write(f"{intestations[i]}\n")
-			self.print(f"- Inizialized {i} file")
+		for key, value in self.settings["parts"].items():
+			if value["validity"]:
+				self.log.print(f"- Inizialize {key} file")
+				if self.csv_agent_history[key].read() == "":
+					self.csv_agent_history[key].write(f"{self.settings['parts'][key]['intestation']}\n")
+					self.log.print(f"- Inizialized {key} history file")
+				self.csv_agent[key].write(f"{self.settings['parts'][key]['intestation']}\n")
+				self.log.print(f"- Inizialized {key} file")
 
 	def update_unchecked_PC(self):
 		""" Update unchecked PC
 		"""
-		# Make my updated array
+		# Make my upgraded array
 		last = agent.csv2array(self.csv_unchecked[:-1:])
 		array = []
 
@@ -183,7 +196,7 @@ class agent:
 		# Update csv
 		self.csv_unchecked2.write(agent.array2csv(array))
 
-		self.print("Unchecked PC updated")
+		self.log.print("Unchecked PC upgraded")
 
 	def csv2array(csv):
 		""" Converts csv file to a py array
@@ -221,32 +234,9 @@ class agent:
 			if i % 2 == 0:
 				result += c
 			else:
-				result += c + self.MACsep
+				result += c + self.settings["parts"]["netinfo"]["MACsep"]
 
 		return result[:-1:]
 
 if __name__ == "__main__":
-	# debug flag
-	debug = True
-
-	# Visual Studio flag
-	vs = True
-
-	# check if is launched by .bat file
-	if "--batch" in sys.argv or "-b" in sys.argv:
-		debug = False
-		vs = False
-
-	# select folder
-	folder = None
-	for arg in sys.argv:
-		if "--folder=" in arg or "-f=" in arg:
-			folder = arg.replace("--folder=", "").replace("-f=", "")
-
-	# choose the module
-	parts=["osversion", "netinfo", "eventsview", "product"]
-	for arg in sys.argv:
-		if "--module=" in arg or "-m=" in arg:
-			parts = [arg.replace("--module=", "").replace("-m=", ""), ]
-
-	if(agent(folder, debug, vs, parts) == None): print("Done")
+	agent()

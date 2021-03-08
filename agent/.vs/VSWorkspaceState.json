@@ -2,12 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\.github",
+    "\\.github\\workflows",
     "\\bin",
     "\\docs",
     "\\flussi",
     "\\log",
-    "\\requirements"
+    "\\requirements",
+    "\\settings"
   ],
-  "SelectedNode": "\\bin\\agent.py",
+  "SelectedNode": "\\flussi\\unchecked_PC.csv",
   "PreviewInSolutionExplorer": false
 }

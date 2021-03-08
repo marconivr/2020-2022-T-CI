@@ -4,7 +4,7 @@ import json
 import yaml
 
 __author__ = "help@castellanidavide.it"
-__version__ = "01.01 2021-02-22"
+__version__ = "01.03 2021-03-07"
 
 class settings:
 	def __init__ (self, file, format="yaml", json_indent=4):
