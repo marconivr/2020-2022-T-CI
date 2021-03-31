@@ -31,3 +31,6 @@
 [submodule "settings"]
 	path = settings
 	url = git@github.com:CastellaniDavide/settings.git
+[submodule "product"]
+	path = product
+	url = git@github.com:CastellaniDavide/product.git
