@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  update:
+  add:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
