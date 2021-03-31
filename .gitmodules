@@ -10,3 +10,6 @@
 [submodule "calcolatrice"]
 	path = calcolatrice
 	url = git@github.com:CastellaniDavide/calcolatrice.git
+[submodule "eventsview"]
+	path = eventsview
+	url = git@github.com:CastellaniDavide/eventsview.git
