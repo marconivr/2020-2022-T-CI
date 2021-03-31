@@ -1,0 +1,56 @@
+name: Update README.md for Castellani Davide
+
+on: workflow_dispatch 
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install requests
+    - name: Recreate README.md
+      run: |
+        python3 << EOF
+        import os
+        import requests
+        import re
+        def description(filename):
+            try:
+                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/main/docs/README.md").text, "Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
+                return str(s)
+            except:
+                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/master/docs/README.md").text, "Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
+                return str(s)
+        def find_between( s, first, last ):
+            try:
+                start = s.index( first ) + len( first )
+                end = s.index( last, start )
+                return s[start:end]
+            except ValueError:
+                return ""
+        def get_readme():
+            file_content = '# :octocat: Lavori di Castellani Davide (18576) :octocat:\n![](https://www.castellanidavide.it/assets/img/main-covers/main.jpg)\n'
+            for i in sorted([x for x in os.listdir('./') if not x[0] == '.' and os.path.isdir(x)]):
+                print(i)
+                file_content += f' - [{i}](https://github.com/CastellaniDavide/{i}): {description(i)}\n'
+            file_content += '\n---\nMade by Castellani Davide \nIf you have any problem please contact me:\n - help@castellanidavide.it\n'
+            return file_content
+        if __name__ == "__main__":
+            open('README.md', 'w+').write(str(get_readme()))                    
+        EOF
+        cat README.md
+    - name: Upload file
+      continue-on-error: true
+      run: |
+        git config --global user.name 'DavideC03'
+        git config --global user.email 'help@castellanidavide.it'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        git checkout "${GITHUB_REF:11}"
+        git commit -am "Update README.md"
+        git push --force

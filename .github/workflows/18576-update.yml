@@ -1,0 +1,21 @@
+name: Update all for Castellani Davide
+
+on: workflow_dispatch
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update modules
+      run: |
+        for f in *; do if [ -d "$f" ]; then echo $f; rm -rf $f; git clone https://github.com/CastellaniDavide/$f; fi; done
+    - name: Upload file
+      continue-on-error: true
+      run: |
+        git config --global user.name 'DavideC03'
+        git config --global user.email 'help@castellanidavide.it'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        git checkout "${GITHUB_REF:11}"
+        git commit -am "Update"
+        git push --force
