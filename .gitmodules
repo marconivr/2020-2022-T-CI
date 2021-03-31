@@ -49,6 +49,3 @@
 [submodule "ldisk"]
 	path = ldisk
 	url = git@github.com:CastellaniDavide/ldisk.git
-[submodule "sanificatori"]
-	path = sanificatori
-	url = git@github.com:CastellaniDavide/sanificatori.git
