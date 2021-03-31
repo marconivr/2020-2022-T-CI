@@ -34,3 +34,6 @@
 [submodule "product"]
 	path = product
 	url = git@github.com:CastellaniDavide/product.git
+[submodule "produttore_e_consumatore"]
+	path = produttore_e_consumatore
+	url = git@github.com:CastellaniDavide/produttore_e_consumatore.git
