@@ -16,3 +16,6 @@
 [submodule "macaddresssep"]
 	path = macaddresssep
 	url = git@github.com:CastellaniDavide/macaddresssep.git
+[submodule "netchange"]
+	path = netchange
+	url = git@github.com:CastellaniDavide/netchange.git
