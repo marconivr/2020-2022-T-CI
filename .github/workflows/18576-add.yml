@@ -1,0 +1,28 @@
+name: Add submodule for Castellani Davide
+
+on: 
+  workflow_dispatch:
+    inputs:
+      submodule:
+        description: 'Sumodule name:'     
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install new submodule
+      run: |
+        git clone https://github.com/CastellaniDavide/${{ github.event.inputs.submodule }}
+        git submodule add git@github.com:CastellaniDavide/${{ github.event.inputs.submodule }}.git ${{ github.event.inputs.submodule }}
+        ls
+    - name: Upload file
+      continue-on-error: true
+      run: |
+        git config --global user.name 'DavideC03'
+        git config --global user.email 'help@castellanidavide.it'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        git checkout "${GITHUB_REF:11}"
+        git commit -am "Added ${{ github.event.inputs.submodule }}"
+        git push --force
