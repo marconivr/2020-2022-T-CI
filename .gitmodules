@@ -13,3 +13,6 @@
 [submodule "eventsview"]
 	path = eventsview
 	url = git@github.com:CastellaniDavide/eventsview.git
+[submodule "macaddresssep"]
+	path = macaddresssep
+	url = git@github.com:CastellaniDavide/macaddresssep.git
