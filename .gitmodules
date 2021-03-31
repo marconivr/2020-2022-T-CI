@@ -40,3 +40,6 @@
 [submodule "sync"]
 	path = sync
 	url = git@github.com:CastellaniDavide/sync.git
+[submodule "tabular_log"]
+	path = tabular_log
+	url = git@github.com:CastellaniDavide/tabular_log.git
