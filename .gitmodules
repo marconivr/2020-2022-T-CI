@@ -4,3 +4,6 @@
 [submodule "bc"]
 	path = bc
 	url = git@github.com:CastellaniDavide/bc.git
+[submodule "agentless"]
+	path = agentless
+	url = git@github.com:CastellaniDavide/agentless.git
