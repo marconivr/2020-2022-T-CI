@@ -1,0 +1,8 @@
+name: Add submodule for Castellani Davide
+
+on: 
+  workflow_dispatch:
+    inputs:
+      submodule:
+        description: 'Sumodule name:'     
+        required: true
