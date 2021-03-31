@@ -25,3 +25,6 @@
 [submodule "osversion"]
 	path = osversion
 	url = git@github.com:CastellaniDavide/osversion.git
+[submodule "pseudo"]
+	path = pseudo
+	url = git@github.com:CastellaniDavide/pseudo.git
