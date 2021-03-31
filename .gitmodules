@@ -22,3 +22,6 @@
 [submodule "netinfo"]
 	path = netinfo
 	url = git@github.com:CastellaniDavide/netinfo.git
+[submodule "osversion"]
+	path = osversion
+	url = git@github.com:CastellaniDavide/osversion.git
