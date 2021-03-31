@@ -37,3 +37,6 @@
 [submodule "produttore_e_consumatore"]
 	path = produttore_e_consumatore
 	url = git@github.com:CastellaniDavide/produttore_e_consumatore.git
+[submodule "sync"]
+	path = sync
+	url = git@github.com:CastellaniDavide/sync.git
