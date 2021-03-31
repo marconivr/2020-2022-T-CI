@@ -28,3 +28,6 @@
 [submodule "pseudo"]
 	path = pseudo
 	url = git@github.com:CastellaniDavide/pseudo.git
+[submodule "settings"]
+	path = settings
+	url = git@github.com:CastellaniDavide/settings.git
