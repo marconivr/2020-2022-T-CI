@@ -3,13 +3,12 @@
     "",
     "\\.github",
     "\\.github\\ISSUE_TEMPLATE",
-    "\\.github\\workflows",
     "\\bin",
     "\\docs",
     "\\flussi",
     "\\log",
     "\\requirements"
   ],
-  "SelectedNode": "\\.github\\workflows\\python-test.yml",
+  "SelectedNode": "\\bin\\osversion.py",
   "PreviewInSolutionExplorer": false
 }

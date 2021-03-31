@@ -12,7 +12,6 @@ setup(
       author_email=get(f"https://api.github.com/users/{get('https://api.github.com/repos/CastellaniDavide/tabular_log').json()['owner']['login']}").json()['email'],
       license='GNU',
       packages=find_packages(),
-      python_requires=">=3.7",
       platforms="linux_distibution",
       install_requires=[i for i in get("https://raw.githubusercontent.com/CastellaniDavide/tabular_log/master/requirements/requirements.txt").text.split("\n") if not "#" in i and i != ''],
       zip_safe=True

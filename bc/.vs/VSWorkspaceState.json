@@ -3,7 +3,6 @@
     "",
     "\\.github",
     "\\.github\\ISSUE_TEMPLATE",
-    "\\.github\\workflows",
     "\\bin",
     "\\docs",
     "\\flussi",
@@ -11,6 +10,6 @@
     "\\requirements",
     "\\sources_files"
   ],
-  "SelectedNode": "\\bin\\bc.bat",
+  "SelectedNode": "\\bin\\uptime.py",
   "PreviewInSolutionExplorer": false
 }

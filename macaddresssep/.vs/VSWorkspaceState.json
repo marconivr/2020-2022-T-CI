@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.github",
-    "\\.github\\workflows",
-    "\\bin",
-    "\\docs",
-    "\\flussi",
-    "\\requirements"
+    "\\bin"
   ],
   "SelectedNode": "\\bin\\macaddresssep.py",
   "PreviewInSolutionExplorer": false

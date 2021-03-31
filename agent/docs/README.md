@@ -12,7 +12,7 @@ Create a container of these programs:
  - python3
  - pip3 librerias (in project core: pip3 install -r requirements/requirements.txt)
  - Change **settings.yaml** file (in partictuar url, token, table)
- 
+
 ## Directories structure
  - .github
    - ISSUE_TEMPLATE
