@@ -46,3 +46,6 @@
 [submodule "usb"]
 	path = usb
 	url = git@github.com:CastellaniDavide/usb.git
+[submodule "ldisk"]
+	path = ldisk
+	url = git@github.com:CastellaniDavide/ldisk.git
