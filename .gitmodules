@@ -19,3 +19,6 @@
 [submodule "netchange"]
 	path = netchange
 	url = git@github.com:CastellaniDavide/netchange.git
+[submodule "netinfo"]
+	path = netinfo
+	url = git@github.com:CastellaniDavide/netinfo.git
