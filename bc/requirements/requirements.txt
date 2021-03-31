@@ -1,6 +1,0 @@
-####### requirements.txt #######
-
-wmi>=1.5.1
-pysqlite3>=0.4.3
-datetime>=4.3
-requests>=2.24.0
