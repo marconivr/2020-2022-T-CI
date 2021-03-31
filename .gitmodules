@@ -1,3 +1,6 @@
 [submodule "agent"]
 	path = agent
 	url = git@github.com:CastellaniDavide/agent.git
+[submodule "bc"]
+	path = bc
+	url = git@github.com:CastellaniDavide/bc.git
