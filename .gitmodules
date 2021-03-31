@@ -7,3 +7,6 @@
 [submodule "agentless"]
 	path = agentless
 	url = git@github.com:CastellaniDavide/agentless.git
+[submodule "calcolatrice"]
+	path = calcolatrice
+	url = git@github.com:CastellaniDavide/calcolatrice.git
