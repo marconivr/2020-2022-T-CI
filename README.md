@@ -1,7 +1,7 @@
 # :octocat: Lavori di Castellani Davide (18576) :octocat:
 ![](https://www.castellanidavide.it/assets/img/main-covers/main.jpg)
  - [agent](https://github.com/CastellaniDavide/agent):  Create a container of these programs: [osversion](https://github.com/CastellaniDavide/osversion); [netinfo](https://github.com/CastellaniDavide/netinfo); [eventsview](https://github.com/CastellaniDavide/eventsview); [product](https://github.com/CastellaniDavide/product)
- - [agentless](https://github.com/CastellaniDavide/agentless):  This tool can help you scan the network
+ - [agentless](https://github.com/CastellaniDavide/agentless): ](
  - [bc](https://github.com/CastellaniDavide/bc):  Get infos about uptime windows pending & update time.
  - [calcolatrice](https://github.com/CastellaniDavide/calcolatrice):  Calcolatrice con le funzioni di somma, sottrazione, moltiplicazione e divisione
  - [eventsview](https://github.com/CastellaniDavide/eventsview):  View some event viewer infos (where it is an error).
