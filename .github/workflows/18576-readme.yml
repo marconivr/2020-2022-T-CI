@@ -22,10 +22,10 @@ jobs:
         import re
         def description(filename):
             try:
-                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/main/docs/README.md").text, "Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
+                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/main/docs/README.md").text, "# Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
                 return str(s)
             except:
-                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/master/docs/README.md").text, "Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
+                s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/master/docs/README.md").text, "# Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
                 return str(s)
         def find_between( s, first, last ):
             try:
