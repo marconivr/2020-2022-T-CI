@@ -49,3 +49,6 @@
 [submodule "ldisk"]
 	path = ldisk
 	url = git@github.com:CastellaniDavide/ldisk.git
+[submodule "vtools"]
+	path = vtools
+	url = git@github.com:CastellaniDavide/vtools.git
