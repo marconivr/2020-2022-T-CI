@@ -23,6 +23,7 @@ jobs:
         def description(filename):
             try:
                 s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/main/docs/README.md").text, "# Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
+                assert(s != "")
                 return str(s)
             except:
                 s = find_between(requests.get(f"https://raw.githubusercontent.com/CastellaniDavide/{filename}/master/docs/README.md").text, "# Description", "#").replace("\r\n", " ").replace("\n", " ").replace("\t", "").replace("    ", "").replace("  ", "").replace("- ", "; ").replace(":;", ":").replace(": ;", ":")
