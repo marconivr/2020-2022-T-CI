@@ -8,8 +8,8 @@
  - [ldisk](https://github.com/CastellaniDavide/ldisk):  Get some logical disks infos.
  - [macaddresssep](https://github.com/CastellaniDavide/macaddresssep):  Normalize MAC Addresses
  - [netchange](https://github.com/CastellaniDavide/netchange):  This project helps to manage al the best net address.
- - [netinfo](https://github.com/CastellaniDavide/netinfo): 
- - [osversion](https://github.com/CastellaniDavide/osversion): 
+ - [netinfo](https://github.com/CastellaniDavide/netinfo):  Get net infos in all computers in "computers.csv" file & in "computers.db" database
+ - [osversion](https://github.com/CastellaniDavide/osversion):  Get the os vesioning by a list of PC. The output will be printed in "osversion.csv" file & "osversion.db" database
  - [product](https://github.com/CastellaniDavide/product):  Get win32_Product infos.
  - [produttore_e_consumatore](https://github.com/CastellaniDavide/produttore_e_consumatore):  Writing and reading from different threads.
  - [pseudo](https://github.com/CastellaniDavide/pseudo):  Pseudo is a program that, from files csv or xml in input, split the informations to sensible and not sensible.We have the file pseudo.conf that contains all the informations for the configuration.In there we find the fields that we want to "delete" (make pseudo-anonymous) and put these informations into the "secret.csv" file and all the rest that don't need to be hide go in the file "public.csv". If you run the program from the cmd or a shell you will see the progress bar of the different part of the program. :smile: 
