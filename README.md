@@ -1,7 +1,7 @@
 # :octocat: Lavori di Castellani Davide (18576) :octocat:
 ![](https://www.castellanidavide.it/assets/img/main-covers/main.jpg)
  - [agent](https://github.com/CastellaniDavide/agent):  Create a container of these programs: [osversion](https://github.com/CastellaniDavide/osversion); [netinfo](https://github.com/CastellaniDavide/netinfo); [eventsview](https://github.com/CastellaniDavide/eventsview); [product](https://github.com/CastellaniDavide/product)
- - [agentless](https://github.com/CastellaniDavide/agentless): [Agentless tool](https://github.com/CastellaniDavide/agentless) can help you scan the network. I you wanted something to help you to scan, in a easy way, your network, this tool is for you. With this tool you can easly scan all the wanted terminals' ports. After execution you could save the data [csv file](https://en.wikipedia.org/wiki/Comma-separated_values) and/ or into [HarperDB](https://harperdb.io/) DataBase. The scope of this tool is to make your network more secure. Seeing the output (csv or DB), you can understand what opened ports are useless. Disabling them you can make the network less avariable for [black hat hacker](https://en.wikipedia.org/wiki/Black_hat_(computer_security)) attacks.
+ - [agentless](https://github.com/CastellaniDavide/agentless): [Agentless tool](https://github.com/CastellaniDavide/agentless) can help you scan the network.I you wanted something to help you to scan, in a easy way, your network, this tool is for you.With this tool you can easly scan all the wanted terminals' ports.After execution you could save the data [csv file](https://en.wikipedia.org/wiki/Comma-separated_values) and/ or into [HarperDB](https://harperdb.io/) DataBase.The scope of this tool is to make your network more secure.Seeing the output (csv or DB), you can understand what opened ports are useless. Disabling them you can make the network less avariable for [black hat hacker](https://en.wikipedia.org/wiki/Black_hat_(computer_security)) attacks.![](https://prod-upp-image-read.ft.com/8fdf7f64-e919-11e9-aefb-a946d2463e4b)
  - [bc](https://github.com/CastellaniDavide/bc):  Get infos about uptime windows pending & update time.
  - [calcolatrice](https://github.com/CastellaniDavide/calcolatrice):  Calcolatrice con le funzioni di somma, sottrazione, moltiplicazione e divisione
  - [eventsview](https://github.com/CastellaniDavide/eventsview):  View some event viewer infos (where it is an error).
@@ -17,6 +17,7 @@
  - [sync](https://github.com/CastellaniDavide/sync):  Sync losts of projects. ![](./sync.svg)
  - [tabular_log](https://github.com/CastellaniDavide/tabular_log):  Creates and manage a tabular log.
  - [usb](https://github.com/CastellaniDavide/usb):  Get and filter USB infos.You can see the project website here [https://castellanidavide.github.io/usb/](https://castellanidavide.github.io/usb/) ![Funcionality image](https://raw.githubusercontent.com/CastellaniDavide/usb/main/docs/funcionality.png)
+ - [vtools](https://github.com/CastellaniDavide/vtools):  Manage vitual machines, getting some informations (eg. OS).
 
 # How to download
 On your shell: ```git clone --recursive --single-branch --branch 18576 git@github.com:marconivr/2020-2022-T-CI.git``` 
