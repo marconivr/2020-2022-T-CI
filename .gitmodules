@@ -52,3 +52,6 @@
 [submodule "vtools"]
 	path = vtools
 	url = git@github.com:CastellaniDavide/vtools.git
+[submodule "produttore_e_consumatore2"]
+	path = produttore_e_consumatore2
+	url = git@github.com:CastellaniDavide/produttore_e_consumatore2.git
