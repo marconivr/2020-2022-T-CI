@@ -5,6 +5,7 @@
  - [bc](https://github.com/CastellaniDavide/bc):  Get infos about uptime windows pending & update time.
  - [calcolatrice](https://github.com/CastellaniDavide/calcolatrice):  Calcolatrice con le funzioni di somma, sottrazione, moltiplicazione e divisione
  - [eventsview](https://github.com/CastellaniDavide/eventsview):  View some event viewer infos (where it is an error).
+ - [getprocess](https://github.com/CastellaniDavide/getprocess):  This code is made to make easier for you take some info about every thread on your PC. You can run this code in two modalities: GUI mode: user-friendly and easy to use; CLI mode: this is the pro mode, I suggest this if you want to use this into a PIPE of programs, or other advanced uses
  - [ldisk](https://github.com/CastellaniDavide/ldisk):  Get some logical disks infos.
  - [macaddresssep](https://github.com/CastellaniDavide/macaddresssep):  Normalize MAC Addresses
  - [netchange](https://github.com/CastellaniDavide/netchange):  This project helps to manage al the best net address.
@@ -12,6 +13,7 @@
  - [osversion](https://github.com/CastellaniDavide/osversion):  Get the os vesioning by a list of PC. The output will be printed in "osversion.csv" file & "osversion.db" database
  - [product](https://github.com/CastellaniDavide/product):  Get win32_Product infos.
  - [produttore_e_consumatore](https://github.com/CastellaniDavide/produttore_e_consumatore):  Writing and reading from different threads.
+ - [produttore_e_consumatore2](https://github.com/CastellaniDavide/produttore_e_consumatore2):  Producer and consumer with multiprocessing
  - [pseudo](https://github.com/CastellaniDavide/pseudo):  Pseudo is a program that, from files csv or xml in input, split the informations to sensible and not sensible.We have the file pseudo.conf that contains all the informations for the configuration.In there we find the fields that we want to "delete" (make pseudo-anonymous) and put these informations into the "secret.csv" file and all the rest that don't need to be hide go in the file "public.csv". If you run the program from the cmd or a shell you will see the progress bar of the different part of the program. :smile: 
  - [settings](https://github.com/CastellaniDavide/settings):  Manage (read/ write) settings file in different formats (eg. JAML, JSON, ...)
  - [sync](https://github.com/CastellaniDavide/sync):  Sync losts of projects. ![](./sync.svg)
