@@ -51,18 +51,18 @@ param (
 ```powershell
 function fnGetConfiguration {
     $ambiente_t = [String]$args[0] # [String]$args -> parametri della funzione
-    $confjson = Get-Content <# ig we'll never know how this function ends :c#>
+    <# funzione #>
 }
 ```
 
 ### COMMENTI
 ```powershell
 <#
-multilinea
-sdkjfhajskd
+multiline
+comment
 #>
 
-# single line
+# single line comment
 ```
 
 ### STRINGHE
@@ -71,5 +71,5 @@ sdkjfhajskd
 $var = "<3"
 Write-Host "hello, world! $var" # Write-Host -> print
 Write-Host "Lorem ipsum $var xdxd lol keks" -ForegroundColor Cyan # -ForegroundColor Cyan  -> colored text omg cool!!!
-Write-Host "Lorem ipsum" + $var + "xdxd lol keks" -ForegroundColor Purple # another concat method in case you didn't want to use the first one idk
+Write-Host "Lorem ipsum" + $var + "xdxd lol keks" -ForegroundColor Purple # another concat method in case you didn't want to use the first one
 ```
