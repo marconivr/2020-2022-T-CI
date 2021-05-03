@@ -70,6 +70,6 @@ comment
 ```powershell
 $var = "<3"
 Write-Host "hello, world! $var" # Write-Host -> print
-Write-Host "Lorem ipsum $var xdxd lol keks" -ForegroundColor Cyan # -ForegroundColor Cyan  -> colored text omg cool!!!
-Write-Host "Lorem ipsum" + $var + "xdxd lol keks" -ForegroundColor Purple # another concat method in case you didn't want to use the first one
+Write-Host "Lorem ipsum $var something" -ForegroundColor Cyan # -ForegroundColor Cyan  -> colored text omg cool!!!
+Write-Host "Lorem ipsum" + $var + "something" -ForegroundColor Purple # another concat method in case you didn't want to use the first one
 ```
