@@ -13,7 +13,7 @@
  - [osversion](https://github.com/CastellaniDavide/osversion):  Get the os vesioning by a list of PC. The output will be printed in "osversion.csv" file & "osversion.db" database
  - [product](https://github.com/CastellaniDavide/product):  Get win32_Product infos.
  - [produttore_e_consumatore](https://github.com/CastellaniDavide/produttore_e_consumatore):  Writing and reading from different threads.
- - [produttore_e_consumatore2](https://github.com/CastellaniDavide/produttore_e_consumatore2):  Producer and consumer with multiprocessing
+ - [produttore_e_consumatore2](https://github.com/CastellaniDavide/produttore_e_consumatore2):  Producer and consumer with multiprocessing. You can use this tool to get the files which are in a selected folder/ subfolder.
  - [pseudo](https://github.com/CastellaniDavide/pseudo):  Pseudo is a program that, from files csv or xml in input, split the informations to sensible and not sensible.We have the file pseudo.conf that contains all the informations for the configuration.In there we find the fields that we want to "delete" (make pseudo-anonymous) and put these informations into the "secret.csv" file and all the rest that don't need to be hide go in the file "public.csv". If you run the program from the cmd or a shell you will see the progress bar of the different part of the program. :smile: 
  - [settings](https://github.com/CastellaniDavide/settings):  Manage (read/ write) settings file in different formats (eg. JAML, JSON, ...)
  - [sync](https://github.com/CastellaniDavide/sync):  Sync losts of projects. ![](./sync.svg)
